@@ -1,0 +1,16 @@
+extends layout
+block content
+	h1= title
+	h3= message
+	form(method='post', name='', action='/doUpload',enctype='multipart/form-data')
+		table.form_table(cellspacing='5', cellpadding='5', border='0')
+			tbody
+				tr
+					td.label File Name:
+					td
+						input(type='file', name='uploadFile', id='fileUploader')
+				tr
+					td
+					td(colspan='3')
+						br
+						input.button2(type='submit', value='Upload', id='fileUploadButton')
