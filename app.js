@@ -26,11 +26,29 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// base path for the application
+var basePath = '/';		// default base-path
+if (config.generateRandomBasePath) {
+  var randomString = Math.floor((1 + Math.random()) * 0x100000000).toString(16).substring(1);	// 8-digit random hex-number
+  basePath = '/' + randomString;
+} else if (config.basePath) {
+  basePath = config.basePath;
+}
+
+// upload path
+var uploadPath = basePath;
+if (uploadPath.charAt(uploadPath.length - 1) != '/') {
+  uploadPath += '/';
+}
+uploadPath += 'doUpload';
+
 // Routes
-app.get('/', routes.index);
-app.post('/doUpload', routes.doUpload);
+app.get(basePath, routes.index);
+routes.uploadPath = uploadPath;
+app.post(uploadPath, routes.doUpload);
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+  var port = app.get('port');
+  console.log('Express server listening on port ' + port + '; application path: ' + 'http://127.0.0.1:' + port + basePath);
 });
