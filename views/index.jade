@@ -2,7 +2,7 @@ extends layout
 block content
 	h1= title
 	h3= message
-	form(method='post', name='', action='/doUpload',enctype='multipart/form-data')
+	form(method='post', name='', action=uploadAction, enctype='multipart/form-data')
 		table.form_table(cellspacing='5', cellpadding='5', border='0')
 			tbody
 				tr
